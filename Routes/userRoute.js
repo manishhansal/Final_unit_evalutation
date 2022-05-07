@@ -2,22 +2,16 @@
 const express = require('express');
 const app = express();
 const userModel = require('../Models/userModel');
+const bookModel = require('../Models/bookModel');
+const commentModel = require('../Models/commentModel')
 app.use(express.json());
 
 app.post('/register', async(req, res, next) => {
-    // res.send("Register route.");
 
     try {
     
         let userDetail = req.body;
         let response = await userModel.insertMany([userDetail]);
-
-        // req.body.parents.forEach(ele => {
-        //     ele.empId = response[0]._id;
-        // });
-
-        // let result = await parentModel.insertMany(req.body.parents);
-        // await userModel.updateOne({ _id: response[0]._id }, { $push: { parentsId: [result[0]._id, result[1]._id] } })
         res.json(response);
 
     } catch (error) {
@@ -30,12 +24,30 @@ app.post('/userLogin', (req, res, next) => {
     res.send("User login route.")
 });
 
-app.post('/createBook', (req, res, next) => {
-    res.send("CreateBook route.")
+app.post('/createBook', async(req, res, next) => {
+    // res.send("CreateBook route.")
+    try {
+    
+        let bookDetail = req.body;
+        let response = await bookModel.insertMany([bookDetail]);
+        res.json(response);
+
+    } catch (error) {
+        res.json(error);
+    }
 });
 
-app.post('/createComment', (req, res, next) => {
-    res.send("Create comment route.")
+app.post('/createComment', async(req, res, next) => {
+    // res.send("Create comment route.")
+    try {
+    
+        let commentDetail = req.body;
+        let response = await commentModel.insertMany([commentDetail]);
+        res.json(response);
+
+    } catch (error) {
+        res.json(error);
+    }
 });
 
 app.get('/viewPosts', (req, res, next) => {
